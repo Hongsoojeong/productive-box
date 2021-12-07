@@ -1,9 +1,18 @@
-name: "productive-box"
-author: "maxam2017"
-description: "Are you an early 🐤 or a night 🦉? Let's check out in gist"
-branding:
-  icon: "activity"
-  color: "blue"
-runs:
-  using: "node12"
-  main: "dist/index.js"
+name: Update gist
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * *"
+jobs:
+  update-gist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update gist
+        uses: maxam2017/productive-box@master
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+          LOCALE: ko-KR
